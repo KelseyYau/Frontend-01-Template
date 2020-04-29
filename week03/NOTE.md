@@ -33,3 +33,35 @@ new Foo
 * foo().b
 
 #### Left Handside & Right Handside
+
+
+#### 简单语句
+* ExpressionStatement
+a = 1 + 2;
+
+* Empty Statement
+* DebuggerStatement
+* ThrowStatement
+* ContinueStatement
+* BreakStatement
+* ReturnStatement
+
+#### 组合语句
+* BlockStatement 
+{
+  [[type]]: normal
+  [[value]]: 
+  [[target]]: 
+}
+
+
+
+#### 声明
+
+
+### 运行
+#### Completion Record
+[[type]] normal, break, continue, return, or throw
+[[value]] Types 
+[[target]] label
+#### Lexical Enviorment
