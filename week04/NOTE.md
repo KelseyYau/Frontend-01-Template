@@ -42,3 +42,51 @@ node环境能够触发宏任务的操作:
 #### 微任务队列的特点
 1. 每个宏任务中有且只有一个微任务队列
 2. 微任务队列也是执行“先进先出”的原则
+
+## 函数调用
+
+```js
+import { foo } from "foo.js"
+var i = 0
+console.log(i)
+foo()
+console.log(i)
+i++
+
+
+import { foo2 } from "foo.js"
+var x = 1
+function foo() {
+  console.log(x)
+  foo2()
+  console.log(x)
+}
+
+export foo
+
+
+var y = 2
+function foo2() {
+  console.log(y)
+}
+export foo2
+```
+
+形成一个执行上下文栈。
+当函数调用进入一个函数时，入栈
+函数返回的时候，则会出栈
+
+* code evaluation state {async/awwait}
+* function
+* script or module
+* generator
+* Realm
+* LexicalEnvironment 词法环境，
+* VariableEnviironment 变量环境
+
+## Realm
+在js当中，函数表达式和对象直接量： {}, [], cllass也会创建对象，但是无法使用instanceOf。
+
+使用隐式转换的时候也会创建对象，如 1 .toString()
+
+这些对象也是具有原型，没有Realm就无法知道他们的原型
