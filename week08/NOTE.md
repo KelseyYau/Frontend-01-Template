@@ -70,5 +70,38 @@
 
 first-letter多了float,vertical-align,盒模型系列
 
+### 动画与绘制
 
+#### Animation
+* @keyframes 关键帧
+* animation: 
+  * animation-name 时间曲线
+  * animation-duration 动画的时长
+  * animation-timing-function 动画的时间曲线
+  * animation-delay 动画开始前的延迟
+  * animation-iteration-count 动画的播放次数
+  * animation-direction 动画的方向
 
+* transition 
+  * transition-property 变换的属性
+  * transition-duration 变换时长
+  * transition-timing-function 变换时间曲线
+  * transition-delay 变换的延迟
+
+```css
+@keyframes mykf {
+  form { background: red }
+  to { background: yellow }
+
+  div {
+    animation:mykf 5s infinite
+  }
+}
+```
+#### cubic-bezier 贝塞尔曲线
+推荐使用ease
+
+### 渲染与颜色
+
+### 图形
+建议使用svg绘制图形
