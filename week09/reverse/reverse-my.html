@@ -1,0 +1,18 @@
+<div id="a">
+  <span>1</span>
+  <p>2</p>
+  <a href="">3</a>
+  <div>4</div>
+</div>
+
+<script>
+  let element = document.getElementById("a")
+  function reverseChildren(element) {
+    let children = element.childNodes
+    let length = children.length
+    for (let i = length - 1; i >=0 ; i--) {
+      element.appendChild(children[i])
+    }
+  }
+  reverseChildren(element)
+</script>
