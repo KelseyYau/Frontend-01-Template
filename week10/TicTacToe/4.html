@@ -1,0 +1,121 @@
+
+<style>
+  .cell {
+    width: 100px;
+    height: 100px;
+    background: seagreen;
+    display: inline-block;
+    border: 1px solid white;
+    vertical-align: middle;
+    line-height: 100px;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+
+<div id="game">
+
+</div>
+
+<script>
+  // winter老师二维数组写法
+  let pattern = [
+    [2, 0, 0],
+    [0, 1, 0],
+    [0, 0, 0]
+  ]
+
+  // 奇偶交替
+  let turn = 0
+  let color
+  function show(pattern) {
+    let game = document.getElementById("game")
+    game.innerHTML = ""
+    for (let i = 0; i < 3; i++ ) {
+      for (let j = 0; j < 3; j++) {
+        let content = document.createElement("div")
+        content.classList.add("cell")
+        content.innerText = pattern[i][j] === 2 ? "X" : pattern[i][j] === 1 ? "O" : ""
+        content.addEventListener('click', (event) => {
+          move(j, i, event)
+        })
+        game.appendChild(content)
+      }
+      game.appendChild(document.createElement("br"))
+    }
+  }
+
+  function move(x, y, event) {
+    color = turn % 2 === 0 ? 2 : turn % 2 === 1 ? 1 : 0
+    if (pattern[y][x] === 0) {
+      pattern[y][x] = color
+      show(pattern)
+      if (check(pattern, color)) {
+        alert(color === 2 ? "X IS WIN!" : "O IS WIN!" )
+      }
+      turn++
+    }
+  }
+
+  function check(pattern, color) {
+    // 横向输赢判断
+    for (let i = 0; i < 3; i++) {
+      let win = true
+      for (let j = 0; j < 3; j++) {
+        if (pattern[i][j] !== color) {
+          win = false
+          break
+        }
+      }
+      if (win) {
+        return true
+      }
+    }
+
+    // 纵向输赢判断
+    for (let i = 0; i < 3; i++) {
+      let win = true
+      for (let j = 0; j < 3; j++) {
+        if (pattern[j][i] !== color) {
+          win = false
+          break
+        }
+      }
+      if (win) {
+        return true
+      }
+    }
+    
+    // 正斜
+    {
+      let win = true
+      for (let j = 0; j < 3; j++) {
+        if (pattern[j][j] !== color) {
+          win = false
+          break
+        }
+      }
+      if (win) {
+        return true
+      }
+    }
+    
+    // 倒斜
+    {
+      let win = true
+      for (let j = 0; j < 3; j++) {
+        if (pattern[j][2 - j] !== color) {
+          win = false
+          break
+        }
+      }
+      if (win) {
+        return true
+      }
+      return false
+    }
+  }
+  show(pattern)
+</script>

@@ -73,3 +73,6 @@ window.getComputedStyle(elt, pseudoElt)
 * elt 想要取的元素
 * pseudoElt 伪元素
 
+### window API
+
+
