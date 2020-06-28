@@ -1,0 +1,94 @@
+<!-- generator写法 -->
+<style>
+  div {
+    background: #f8f8f8;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 30px;
+  }
+
+  .green.light {
+    background: green;
+  }
+
+  .yellow.light {
+    background: yellow;
+  }
+
+  .red.light {
+    background: red;
+  }
+</style>
+
+<div class="green"></div>
+<div class="yellow"></div>
+<div class="red"></div>
+
+<script>
+  function green() {
+    let lights = document.getElementsByTagName('div')
+    for (var i = 0; i < 3; i++) {
+      lights[i].classList.remove('light')
+      document.getElementsByClassName('green')[0].classList.add('light')
+    }
+  }
+
+  function yellow() {
+    let lights = document.getElementsByTagName('div')
+    for (var i = 0; i < 3; i++) {
+      lights[i].classList.remove('light')
+      document.getElementsByClassName('yellow')[0].classList.add('light')
+    }
+  }
+
+  function red() {
+    let lights = document.getElementsByTagName('div')
+    for (var i = 0; i < 3; i++) {
+      lights[i].classList.remove('light')
+      document.getElementsByClassName('red')[0].classList.add('light')
+    }
+  }
+
+  function wait(t) {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, t)
+    })
+  }
+  
+
+
+  function* start() {
+    while(true) {
+      green()
+      yield wait(5000)
+      yellow()
+      yield wait(2000)
+      red()
+      yield wait(3000)
+    }
+  }
+
+  function run(iterator) {
+    let {value, done} = iterator.next()
+    if (done) {
+      return
+    } 
+    if (value instanceof Promise) {
+      value.then(() => {
+        run(iterator)
+      })
+    }
+  }
+
+  function co(generator) {
+    return function() {
+      return run(generator())
+    }
+  }
+
+  start = co(start)
+
+  start()
+</script>

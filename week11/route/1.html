@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<style>
+  .cell {
+    width:6px;
+    height:6px;
+    background-color: gray;
+    border-bottom:solid 1px white;
+    border-right:solid 1px white;
+  }
+  #container{
+    width:701px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>
+
+<div id="container">
+
+</div>
+<button onclick="save()">保存</button>
+<script>
+
+  function save() {
+    localStorage['map'] = JSON.stringify(map)
+  }
+
+  var map = localStorage.map ? JSON.parse(localStorage.map) : new Array(10000).fill(0)
+  let container = document.getElementById('container')
+  for (let i = 0; i < 100; i++) {
+    for (let j = 0; j < 100; j++) {
+      let cell = document.createElement('div')
+      cell.classList.add('cell')
+      if (map[i * 100 + j] === 1) {
+        cell.style.backgroundColor = 'black'
+      }
+
+      cell.addEventListener('mousemove', () => {
+        if (mouse) {
+          if (clear) {
+            cell.style.backgroundColor = ''
+            map[i * 100 + j] = 0
+          } else {
+            cell.style.backgroundColor = 'black'
+            map[i * 100 + j] = 1
+          }
+        }
+      })
+      container.appendChild(cell)
+    }
+  }
+
+  // 设定标志位
+  let mouse = false
+
+  // 右键清除
+  let clear = false
+  document.addEventListener('mousedown', (e) => {
+    mouse = true
+    clear = (e.which === 3)
+  })
+  document.addEventListener('mouseup', () => mouse = false)
+  document.addEventListener('contextmenu', e => e.preventDefault())
+
+  // 寻路
+  function findPath(map, start, end) {
+    map = map.slice()
+    // 初始化队列
+    let queue = [start]
+
+    function insert([x, y]) {
+      if (map[100 * y + x] !== 0) {
+        return
+      }
+      if (x < 0 || y > 0 || x >= 100 || y >= 100) {
+        return
+      }
+      map[100 * y + x] = 2
+      queue.push([x, y])
+    }
+
+    while(queue.length) {
+      let [x, y] = queue.shift()  // pop unshift  or push shift
+      if (x === end[0] && y === end[1]) {
+        return true
+      }
+      insert([x - 1, y])
+      insert([x + 1, y])
+      insert([x, y - 1])
+      insert([x, y + 1])
+    }
+    return false
+  }
+</script>
