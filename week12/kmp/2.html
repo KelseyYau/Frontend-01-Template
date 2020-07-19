@@ -20,10 +20,12 @@
       if (source[i] === pattern[j]){
         j ++
       } else {
-        j = table[j]
+        j = table[j - 1]
 
         if (source[i] === pattern[j]) {
           j++
+        } else {
+          j = 0
         }
       }
 
