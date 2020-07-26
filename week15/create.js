@@ -63,10 +63,6 @@ export class Wraper {
     this.root.setAttribute(name, value)
   }
 
-  get style() {
-    return this.root.style
-  }
-  
   mountTo(parent) {
     parent.appendChild(this.root)
     for(let child of this.children) {

@@ -1,5 +1,5 @@
 import { create, Wraper, Text } from './create'
-
+// import {Carousel} from "./carousel.view";
 
 
 //////////////////////////////////////////
@@ -30,42 +30,14 @@ class Carousel {
   }
 
   render() {
-    let children = this.data.map( url => {
-      let element = <img src={url} />
-      element.addEventListener("dragstart", event => event.preventDefault())
-      
-      return element
-    })
-
-  let root = <div class="carousel">{{children}}</div>
-    let position = 0
-
-    let nextPic = () => {
-      let nextPosition = (position + 1) % this.data.length
-
-      let current = children[position]
-
-      let next = root[nextPosition]
-      
-      current.style.transition = "ease 0s"
-      next.style.transition = "ease 0s"
-
-      current.style.transform = `translateX(${- 100 * position}%)`
-      next.style.transform = `translateX(${100 - 100 * nextPosition}%)`
-
-      setTimeout(() => {
-        current.style.transition = ""
-        next.style.transition = ""
-
-        current.style.transform = `translateX(${- 100 - 100 * position}%)`
-        next.style.transform = `translateX(${- 100 * nextPosition}%)`
-        position = nextPosition
-      }, 20)
-      setTimeout(nextPic, 3000)
-    }
-    setTimeout(nextPic, 3000)
-    
-    return root
+    return <div class="carousel">
+      { this.data.map( url => {
+        let element = <img src={url} />
+        element.addEventListener("dragstart", event => event.preventDefault())
+        
+        return element
+      }) }
+    </div>
   }
 
   mountTo(parent) {
