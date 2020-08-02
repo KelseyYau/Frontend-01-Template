@@ -1,6 +1,4 @@
-let element = document.body
-
-function enanbleGesture(element) {
+export function enanbleGesture(element) {
   let contexts = Object.create(null)
 
   let MOUSE_SYMBOL = Symbol("mouse")
